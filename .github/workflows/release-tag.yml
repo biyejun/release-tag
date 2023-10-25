@@ -9,6 +9,7 @@ jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout code
         uses: actions/checkout@master
@@ -19,4 +20,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          myToken: ${{ secrets.GITHUB_TOKEN }}
