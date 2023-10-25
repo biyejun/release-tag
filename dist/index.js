@@ -30095,6 +30095,8 @@ const { GitHub, context } = __nccwpck_require__(5942);
 async function run() {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
+    console.log(process.env, 'process.env');
+    console.log(process.env.GITHUB_TOKEN, 'process.env.GITHUB_TOKEN');
     const github = new GitHub(process.env.GITHUB_TOKEN);
 
     const contextJSON = JSON.stringify(context, null, 2);
