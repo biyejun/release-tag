@@ -30090,13 +30090,15 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(9093);
-const { GitHub, context } = __nccwpck_require__(5942);
+const github = __nccwpck_require__(5942);
 
 async function run() {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
     console.log(process.env, 'process.env');
     console.log(process.env.GITHUB_TOKEN, 'process.env.GITHUB_TOKEN');
+
+    console.log(github, 'github');
 
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 
