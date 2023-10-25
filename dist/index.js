@@ -30097,7 +30097,12 @@ async function run() {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
     console.log(process.env, 'process.env');
     console.log(process.env.GITHUB_TOKEN, 'process.env.GITHUB_TOKEN');
-    const github = new GitHub(process.env.GITHUB_TOKEN);
+
+    const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
+
+    console.log(octokit, 'octokit');
+
+    const context = github.context;
 
     const contextJSON = JSON.stringify(context, null, 2);
     console.log(contextJSON, 'contextJSON');
@@ -30120,7 +30125,7 @@ async function run() {
     // Create a release
     // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
-    await github.repos.createRelease({
+    await octokit.rest.repos.createRelease({
       owner,
       repo,
       tag_name: tag,
