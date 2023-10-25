@@ -4,19 +4,8 @@ const github = require('@actions/github');
 async function run() {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
-    console.log(process.env, 'process.env');
-    console.log(process.env.GITHUB_TOKEN, 'process.env.GITHUB_TOKEN');
-
-    console.log(github, 'github');
-
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
-
-    console.log(octokit, 'octokit');
-
     const context = github.context;
-
-    const contextJSON = JSON.stringify(context, null, 2);
-    console.log(contextJSON, 'contextJSON');
 
     // Get owner and repo from context of payload that triggered the action
     const { repository } = context.payload;
@@ -25,7 +14,6 @@ async function run() {
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
     const tagName = core.getInput('tag_name', { required: true });
-    console.log(tagName, 'tagName');
 
     // This removes the 'refs/tags' portion of the string, i.e. from 'refs/tags/v1.10.15' to 'v1.10.15'
     const tag = tagName.replace('refs/tags/', '');
