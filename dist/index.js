@@ -30110,7 +30110,9 @@ async function run() {
     console.log(contextJSON, 'contextJSON');
 
     // Get owner and repo from context of payload that triggered the action
-    const { owner, repo } = context.repo;
+    const { repository } = context.payload;
+    const { name: repoName, owner } = repository
+    const { name: ownerName } = owner
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
     const tagName = core.getInput('tag_name', { required: true });
@@ -30127,15 +30129,20 @@ async function run() {
     // Create a release
     // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
-    await octokit.rest.repos.createRelease({
-      owner,
-      repo,
+
+    const params = {
+      owner: ownerName,
+      repo: repoName,
       tag_name: tag,
       name: releaseName,
       body,
       draft,
       prerelease,
-    });
+    }
+
+    console.log(JSON.stringify(params, null, 2), 'params~~');
+
+    await octokit.rest.repos.createRelease(params);
   } catch (error) {
     core.setFailed(error.message);
   }
